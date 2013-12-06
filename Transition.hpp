@@ -1,0 +1,36 @@
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class transition
+{
+
+public:
+  int nextState;
+  char writeChar;
+  char direction;
+  
+  int set(int addState, char addChar, char addDirection);
+
+
+};
+
+class transitionTable
+{
+ public:
+  vector<vector <transition> > table;
+  int numStates;
+
+};
+
+int transition::set(int addState,char addChar,char addDirection)
+{
+
+  nextState=addState;
+  writeChar=addChar;
+  direction=addDirection;
+
+  return 1;
+
+}
