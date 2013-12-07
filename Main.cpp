@@ -107,7 +107,6 @@ int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, 
 	     cout<<anotherBuffer<<"  |||   "<<miniBuffer<<endl;
 	      return -1;
 	    }
-	  cout<<"We reached this point"<<endl;	 
 	  anotherBuffer=miniBuffer;
 	  anotherBuffer.erase(anotherBuffer.find(','),string::npos);
 	  miniBuffer.erase(0,miniBuffer.find(',')+1);
@@ -151,17 +150,17 @@ int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, 
 
 int run(transitionTable &transitionTable,alphabets &alphabet,tape &tape)
 {
-  cout<<"running"<<endl;
+  ofstream ofl;
+  ofl.open("log.txt");
   int count=0;
   while(tape.currentState>=0)
     {
-      cout<<"Doing "<<count++<<endl;
       char compareChar;
       char direction;
-      char nextState;
+      int nextState;
       char writeChar;
      compareChar=tape.read();
-     cout<<compareChar<<endl;
+     ofl<<compareChar<<endl;
      int charPos=-1;
      for(int i=0;i<alphabet.tapeAlphabet.size();i++)
        {
@@ -177,20 +176,20 @@ int run(transitionTable &transitionTable,alphabets &alphabet,tape &tape)
      nextState=transitionTable.table[tape.currentState][charPos].nextState;
      writeChar=transitionTable.table[tape.currentState][charPos].writeChar;
 
-     cout<<"["<<nextState<<","<<writeChar<<","<<direction<<"]"<<endl;    
+     ofl<<"["<<nextState<<","<<writeChar<<","<<direction<<"]"<<endl;    
      tape.write(writeChar);
      if(direction=='+')
        tape.moveForward();
      else
        tape.moveBack();
+
      tape.setState(nextState);
-  cout<<tape.currentState<<endl;
-  cout<<endl;
-
+     string returnString=tape.toString();
+     ofl<<returnString<<endl;
+     ofl<<"Setting State '"<<nextState<<"' Moving '"<<direction<<"'writing char '"<<writeChar<<"'"<<endl;
+     ofl<<"Current State: "<<tape.currentState<<endl;
+ 
     }//close while
-
-  cout<<tape.toString()<<endl;
-  cout<<tape.currentState<<endl;
   return 1;
 }//close func
 
@@ -206,29 +205,19 @@ int main(int argc,char *argv[])
 
   if(parser(ifl, transitionTable1, alphabet1, init)<0)
     return-1;
-  
-  cout<<"----"<<init<<endl;
   tape tape1(init);
+ 
+
   if(run(transitionTable1,alphabet1,tape1)<0)
     return -1;
 
-  for(int i=0;i<alphabet1.tapeAlphabet.size();i++)
-    cout<<alphabet1.tapeAlphabet[i]<<endl;
 
-  for(int i=0;i<alphabet1.inputAlphabet.size();i++)
-    cout<<alphabet1.inputAlphabet[i]<<endl;
-
-  for(int i=0;i<transitionTable1.table.size();i++)
-    {
-      for(int j=0;j<transitionTable1.table[i].size();j++)
-	{
-	  transition transition=transitionTable1.table[i][j];
-	  cout<<transition.nextState<<"  "<<transition.writeChar<<"  "<<transition.direction<<endl;
-	}
-
-    }
-
-
+  cout<<"Result on Tape: "<<tape1.toString()<<endl;
+  cout<<"Final State: " <<tape1.currentState<<endl;
+  if(tape1.currentState==-1)
+    cout<<"Which is the YES state"<<endl;
+  else if(tape1.currentState==-2)
+    cout<<"Which is the NO state"<<endl;
 
   return 1;
 }

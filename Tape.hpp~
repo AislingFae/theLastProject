@@ -32,23 +32,29 @@ struct square
 
   tape::tape(string init)
 {
-
+  cout<<"This is what we'll be working with"<<init<<endl;
   currentSquare=new square;
   startSquare=currentSquare;
   currentSquare->sqNum=0;
   currentSquare->sqChar=init[0];
   currentSquare->prev=NULL;
-  square *prevSquare=currentSquare;
-  for(int i=1;i<init.size();i++)
+  currentSquare->next=NULL;
+  cout<<"current square "<<currentSquare->sqChar<<endl;
+  for(int i=1;i<init.length();i++)
     {
+      square *prevSquare=currentSquare;
+      cout<<i<<endl;
       currentSquare=new square;
       prevSquare->next=currentSquare;
       currentSquare->prev=prevSquare;
       currentSquare->next=NULL;
       currentSquare->sqChar=init[i];
       currentSquare->sqNum=i;
+      cout<<"Curent square num "<<currentSquare->sqNum<<endl;
+      cout<<"Current square char "<<currentSquare->sqChar<<endl;
     }
-
+  currentSquare=startSquare;
+  cout<<"StartSquare num "<<startSquare->sqNum<<endl;
 }
 
 void tape::moveForward()
@@ -114,6 +120,7 @@ string tape::toString()
   square *readSquare=startSquare;
   while(readSquare->next!=NULL)
     {
+      cout<<" next Square num"<<readSquare->next->sqNum<<endl;
       buffer=readSquare->sqChar;
       returnString.append(buffer);
       readSquare=readSquare->next;

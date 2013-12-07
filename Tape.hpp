@@ -32,15 +32,15 @@ struct square
 
   tape::tape(string init)
 {
-
   currentSquare=new square;
   startSquare=currentSquare;
   currentSquare->sqNum=0;
   currentSquare->sqChar=init[0];
   currentSquare->prev=NULL;
-  square *prevSquare=currentSquare;
-  for(int i=1;i<init.size();i++)
+  currentSquare->next=NULL;
+  for(int i=1;i<init.length();i++)
     {
+      square *prevSquare=currentSquare;
       currentSquare=new square;
       prevSquare->next=currentSquare;
       currentSquare->prev=prevSquare;
@@ -49,6 +49,7 @@ struct square
       currentSquare->sqNum=i;
     }
   currentSquare=startSquare;
+
 }
 
 void tape::moveForward()
@@ -112,7 +113,8 @@ string tape::toString()
   string returnString="";
   string buffer;
   square *readSquare=startSquare;
-  while(readSquare->next!=NULL)
+
+  while(readSquare!=NULL)
     {
       buffer=readSquare->sqChar;
       returnString.append(buffer);

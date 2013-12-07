@@ -1,0 +1,45 @@
+0
+[0,0,+]
+0001001
+Setting State '0' Moving '+'writing char '0'
+Current State: 0
+0
+[0,0,+]
+0001001
+Setting State '0' Moving '+'writing char '0'
+Current State: 0
+0
+[0,0,+]
+0001001
+Setting State '0' Moving '+'writing char '0'
+Current State: 0
+1
+[0,1,+]
+0001001
+Setting State '0' Moving '+'writing char '1'
+Current State: 0
+0
+[0,0,+]
+0001001
+Setting State '0' Moving '+'writing char '0'
+Current State: 0
+0
+[0,0,+]
+0001001
+Setting State '0' Moving '+'writing char '0'
+Current State: 0
+1
+[0,1,+]
+0001001@
+Setting State '0' Moving '+'writing char '1'
+Current State: 0
+@
+[1,@,-]
+0001001@
+Setting State '1' Moving '-'writing char '@'
+Current State: 1
+1
+[-2,1,-]
+0001001@
+Setting State '-2' Moving '-'writing char '1'
+Current State: -2
