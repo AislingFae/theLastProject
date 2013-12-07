@@ -17,7 +17,7 @@ struct square
 };
 
   int currentState;
-  square *currentSquare;
+  square *currentSquare,*startSquare;
 
 
   tape(string init);
@@ -27,13 +27,14 @@ struct square
   void write(char add);
   void setState(int newState);
   int getState();
+  string toString();
 };
 
   tape::tape(string init)
 {
 
   currentSquare=new square;
-  square *startState=currentSquare;
+  startSquare=currentSquare;
   currentSquare->sqNum=0;
   currentSquare->sqChar=init[0];
   currentSquare->prev=NULL;
@@ -47,7 +48,7 @@ struct square
       currentSquare->sqChar=init[i];
       currentSquare->sqNum=i;
     }
-
+  currentSquare=startSquare;
 }
 
 void tape::moveForward()
@@ -78,6 +79,7 @@ void tape::moveBack()
       prevSquare->sqChar='@';
       prevSquare->prev=NULL;
       currentSquare=prevSquare;
+      startSquare=currentSquare;
     }
   else
     currentSquare=currentSquare->prev;
@@ -102,4 +104,19 @@ int tape::getState()
 void tape::setState(int newState)
 {
  currentState=newState;
+}
+
+string tape::toString()
+{
+
+  string returnString="";
+  string buffer;
+  square *readSquare=startSquare;
+  while(readSquare->next!=NULL)
+    {
+      buffer=readSquare->sqChar;
+      returnString.append(buffer);
+      readSquare=readSquare->next;
+    }
+  return returnString;
 }

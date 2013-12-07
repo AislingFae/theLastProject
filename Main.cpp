@@ -8,7 +8,7 @@
 #include <cstdlib>
 using namespace std;
 
-int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, string init)
+int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, string &init)
 {
   string buffer;
   int numStates;
@@ -88,7 +88,8 @@ int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, 
 
 	  if((anotherBuffer=="")||(anotherBuffer[0]!='['))
 	   { 
-	      cout<<"Unproperly formatted transition in line"<<5+i<<endl;
+	     cout<<"Unproperly formatted transition in line "<<4+i<<" Missing '['"<<endl;
+	     cout<<anotherBuffer<<"  |||   "<<miniBuffer<<endl;
 	      return -1;
 	    }
 	  anotherBuffer.erase(0,1);
@@ -96,29 +97,38 @@ int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, 
 	  if(addState>numStates)
 	    {
 	      cout<<"states must be numbered sequentially and state "<<addState<<" is larger than the given maximun number of states"<<endl;
+	     cout<<anotherBuffer<<"  |||   "<<miniBuffer<<endl;
 	      return -1;
 	    }
 
-	  if(anotherBuffer.find(',')==string::npos)
+	  if(miniBuffer.find(',')==string::npos)
 	    {	      
-	      cout<<"Unproperly formatted transition in line"<<5+i<<endl;
+	      cout<<"Unproperly formatted transition in line "<<4+i<<" Missing Commas"<<endl;
+	     cout<<anotherBuffer<<"  |||   "<<miniBuffer<<endl;
 	      return -1;
 	    }
+	  cout<<"We reached this point"<<endl;	 
+	  anotherBuffer=miniBuffer;
 	  anotherBuffer.erase(anotherBuffer.find(','),string::npos);
 	  miniBuffer.erase(0,miniBuffer.find(',')+1);
-	 
+
 	  if((anotherBuffer=="")||(anotherBuffer.size()>1))
 	   { 
-	     cout<<"Unproperly formatted transition in line"<<5+i<<endl;
+	     cout<<"Unproperly formatted transition in line "<<4+i<<" Write char incorrect:"<<anotherBuffer<<endl;
+	     cout<<anotherBuffer<<"  |||   "<<miniBuffer<<endl;
 	     return -1;
 	    }
+
+
+
 	  addChar=anotherBuffer[0];
 	  anotherBuffer=miniBuffer;
 	  anotherBuffer.erase(anotherBuffer.find(']'),string::npos);
 	  miniBuffer.erase(0,miniBuffer.find(']')+1);
 	  if(((anotherBuffer!="+")&&(anotherBuffer!="-"))||(miniBuffer!=""))
 	    {
-	     cout<<"Unproperly formatted transition in line"<<5+i<<endl;
+	      cout<<"Unproperly formatted transition in line "<<4+i<<" Direction wrong"<<anotherBuffer<<endl;
+	     cout<<anotherBuffer<<"  |||   "<<miniBuffer<<endl;
 	     return -1;
 	    }
 
@@ -138,6 +148,53 @@ int parser(ifstream &ifl,transitionTable &transitionTable, alphabets &alphabet, 
 	return 1;
 }//close func
 
+
+int run(transitionTable &transitionTable,alphabets &alphabet,tape &tape)
+{
+  cout<<"running"<<endl;
+  int count=0;
+  while(tape.currentState>=0)
+    {
+      cout<<"Doing "<<count++<<endl;
+      char compareChar;
+      char direction;
+      char nextState;
+      char writeChar;
+     compareChar=tape.read();
+     cout<<compareChar<<endl;
+     int charPos=-1;
+     for(int i=0;i<alphabet.tapeAlphabet.size();i++)
+       {
+	 if(compareChar==alphabet.tapeAlphabet[i])
+	   charPos=i;
+       }
+     if(charPos<0)
+       {
+	 cout<<"Unrecognizable character '"<<compareChar<<"' on tape."<<endl;
+	 return -1;
+       }
+     direction=transitionTable.table[tape.currentState][charPos].direction;
+     nextState=transitionTable.table[tape.currentState][charPos].nextState;
+     writeChar=transitionTable.table[tape.currentState][charPos].writeChar;
+
+     cout<<"["<<nextState<<","<<writeChar<<","<<direction<<"]"<<endl;    
+     tape.write(writeChar);
+     if(direction=='+')
+       tape.moveForward();
+     else
+       tape.moveBack();
+     tape.setState(nextState);
+  cout<<tape.currentState<<endl;
+  cout<<endl;
+
+    }//close while
+
+  cout<<tape.toString()<<endl;
+  cout<<tape.currentState<<endl;
+  return 1;
+}//close func
+
+
 int main(int argc,char *argv[])
 {
 
@@ -149,9 +206,11 @@ int main(int argc,char *argv[])
 
   if(parser(ifl, transitionTable1, alphabet1, init)<0)
     return-1;
-
+  
+  cout<<"----"<<init<<endl;
   tape tape1(init);
-  //  initializeTape(transitionTable1,alphabet1,tape1);
+  if(run(transitionTable1,alphabet1,tape1)<0)
+    return -1;
 
   for(int i=0;i<alphabet1.tapeAlphabet.size();i++)
     cout<<alphabet1.tapeAlphabet[i]<<endl;
