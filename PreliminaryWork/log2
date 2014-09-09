@@ -1,0 +1,129 @@
+We reached this point
+We reached this point
+We reached this point
+We reached this point
+We reached this point
+We reached this point
+----111
+This is what we'll be working with111
+current square 1
+1
+Curent square num 1
+Current square char 1
+2
+Curent square num 2
+Current square char 1
+StartSquare num 0
+Tape to stringcurrentSquare num0
+currentSquare num1
+currentSquare num2
+111
+running
+Doing 0
+1
+[0,1,+]
+currentSquare num0
+currentSquare num1
+currentSquare num2
+111
+Setting State '0' Moving '+'writing char '1'
+0
+
+Doing 1
+1
+[0,1,+]
+currentSquare num0
+currentSquare num1
+currentSquare num2
+111
+Setting State '0' Moving '+'writing char '1'
+0
+
+Doing 2
+1
+[0,1,+]
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+111@
+Setting State '0' Moving '+'writing char '1'
+0
+
+Doing 3
+@
+[1,@,-]
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+111@
+Setting State '1' Moving '-'writing char '@'
+1
+
+Doing 4
+1
+[1,0,-]
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+110@
+Setting State '1' Moving '-'writing char '0'
+1
+
+Doing 5
+1
+[1,0,-]
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+100@
+Setting State '1' Moving '-'writing char '0'
+1
+
+Doing 6
+1
+[1,0,-]
+currentSquare num-1
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+@000@
+Setting State '1' Moving '-'writing char '0'
+1
+
+Doing 7
+@
+[-1,1,-]
+currentSquare num-2
+currentSquare num-1
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+@1000@
+Setting State '-1' Moving '-'writing char '1'
+-1
+
+currentSquare num-2
+currentSquare num-1
+currentSquare num0
+currentSquare num1
+currentSquare num2
+currentSquare num3
+@1000@
+-1
+0
+1
+@
+0
+1
+0  0  +
+0  1  +
+1  @  -
+-1  1  -
+1  0  -
+-1  1  -

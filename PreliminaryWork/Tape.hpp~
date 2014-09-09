@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include <sstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -118,10 +118,8 @@ string tape::toString()
   while(readSquare->sqChar=='@')
     readSquare=readSquare->next;
 
-  stringstream ss;
-  ss << readSquare->sqNum;
-  buffer = ss.str();
 
+  ltostr(readSquare->sqNum,buffer,10);
   returnString.append(buffer);
   returnString.append(":");
 

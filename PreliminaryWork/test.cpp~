@@ -1,0 +1,26 @@
+#include <vector>
+#include <string>
+#include <iostream>
+#include "DTM.hpp"
+#include "tape.hpp"
+#include "Transition.hpp"
+
+using namespace std;
+
+int main()
+{
+
+  alphabets al;
+
+  al.addToTape('@');
+  al.addToTape('a');
+  al.addToTape('b');
+
+  al.addToInput('v');
+  al.addToInput('f');
+
+  al.readOut();
+
+  return 1;
+}
+

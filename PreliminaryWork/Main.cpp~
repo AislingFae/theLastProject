@@ -193,9 +193,6 @@ int run(transitionTable &transitionTable,alphabets &alphabet,tape &tape)
      ofl<<"Current State: "<<tape.currentState<<endl;
  
     }//close while
-
-  cout<<tape.currentState<<":"<<tape.currentSquare->sqNum<<":"<<tape.toString()<<endl;
-
   return 1;
 }//close func
 
